@@ -24,9 +24,9 @@ window.setInterval(function () {
   y += Math.floor((Math.random() * 11) + 1) - 6;
   putPixel(x, y);
 
-  // ctx.moveTo(xPrev, yPrev);
-  // ctx.lineTo(x, y);
-  // ctx.stroke(); 
+  ctx.moveTo(xPrev, yPrev);
+  ctx.lineTo(x, y);
+  ctx.stroke(); 
 
   xPrev = x;
   yPrev= y;
