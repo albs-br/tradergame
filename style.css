@@ -7,10 +7,10 @@ button {
   height: 100px;
 }
 
-.buy {
+#buy {
     background-color: green;
 }
 
-.sell {
+#sell {
     background-color: red;
 }
