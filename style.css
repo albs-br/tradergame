@@ -1,0 +1,16 @@
+h1, h2 {
+  font-family: Lato;
+}
+
+button {
+  width: 45%;
+  height: 100px;
+}
+
+.buy {
+    background-color: green;
+}
+
+.sell {
+    background-color: red;
+}
