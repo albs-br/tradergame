@@ -70,7 +70,7 @@ let btnBuy = document.getElementById('buy');
 let btnSell = document.getElementById('sell');
 
 btnBuy.onclick = function() {
-  buyPoint = { x, y };
+  buyPoint = { x, y: SCREEN_HEIGHT - y };
 
   ctx.beginPath();
   ctx.moveTo(buyPoint.x, 0);
@@ -83,17 +83,21 @@ btnBuy.onclick = function() {
 };
 
 let sell = () => {
-  if(!buyPoint) return;
+  console.log('sell');
+  if(buyPoint.x == undefined) return;
 
-  sellPoint = { x, y };
+  sellPoint = { x, y: SCREEN_HEIGHT - y };
 
-  let result = sellPoint.y / buyPoint.y;
-  console.log(result);
+  let result = (((sellPoint.y / buyPoint.y) - 1) * 100).toFixed(2);
+
+  console.log(sellPoint.y + ' | ' 
+    + buyPoint.y + ' | '
+    + result);
 
   ctx.beginPath();
   ctx.moveTo(sellPoint.x, 0);
   ctx.lineTo(sellPoint.x, SCREEN_HEIGHT - 1);
-  ctx.stroke(); 
+  ctx.stroke();
   ctx.closePath();
 
   buyPoint = { };
