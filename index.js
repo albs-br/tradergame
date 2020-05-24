@@ -69,5 +69,17 @@ btnBuy.onclick = function() {
   ctx.lineTo(buyPoint.x, SCREEN_HEIGHT - 1);
   ctx.stroke(); 
 
-  btnBuy.disable = true;
+  btnBuy.disabled = true;
+  btnSell.disabled = false;
+};
+
+btnSell.onclick = function() {
+  sellPoint = { x, y };
+
+  ctx.moveTo(sellPoint.x, 0);
+  ctx.lineTo(sellPoint.x, SCREEN_HEIGHT - 1);
+  ctx.stroke(); 
+
+  btnBuy.disabled = false;
+  btnSell.disabled = true;
 };
