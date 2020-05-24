@@ -40,6 +40,9 @@ window.setInterval(function () {
   yPrev = y;
 
   if(x >= SCREEN_WIDTH) { 
+
+    sell();
+
     x = 0;
     y = SCREEN_HEIGHT / 2;
     xPrev = x;
@@ -47,6 +50,10 @@ window.setInterval(function () {
     buyPoint = { };
     sellPoint = { };
     ClearScreen();
+
+    btnBuy.disabled = false;
+    btnSell.disabled = true;
+
   }
 
 }, 1);
@@ -65,21 +72,35 @@ let btnSell = document.getElementById('sell');
 btnBuy.onclick = function() {
   buyPoint = { x, y };
 
+  ctx.beginPath();
   ctx.moveTo(buyPoint.x, 0);
   ctx.lineTo(buyPoint.x, SCREEN_HEIGHT - 1);
+  ctx.closePath();
   ctx.stroke(); 
 
   btnBuy.disabled = true;
   btnSell.disabled = false;
 };
 
-btnSell.onclick = function() {
+let sell = () => {
+  if(!buyPoint) return;
+
   sellPoint = { x, y };
 
+  let result = sellPoint.y / buyPoint.y;
+  console.log(result);
+
+  ctx.beginPath();
   ctx.moveTo(sellPoint.x, 0);
   ctx.lineTo(sellPoint.x, SCREEN_HEIGHT - 1);
   ctx.stroke(); 
+  ctx.closePath();
 
-  btnBuy.disabled = false;
+  buyPoint = { };
+  
+  btnBuy.disabled = true;
   btnSell.disabled = true;
 };
+
+btnSell.onclick = sell;
+
