@@ -27,6 +27,9 @@ let yPrev= y;
 let buyPoint = { };
 let sellPoint = { };
 
+let cash = 1000;
+let lastResult;
+
 
 window.setInterval(function () {
   //for(let x=0; x<SCREEN_WIDTH; x++) {
@@ -65,6 +68,16 @@ window.setInterval(function () {
 function ClearScreen() {
   ctx.fillStyle = "#000000"; 
   ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+  //
+  //fillStyle
+  //strokeStyle
+  ctx.font = '48px Verdana';
+  //ctx.fillText('Hello world', 10, 50);
+  if(lastResult != undefined) {
+    ctx.strokeText(lastResult, 10, 50);
+  }
+
 }
 
 let btnBuy = document.getElementById('buy');
@@ -89,14 +102,8 @@ let sell = () => {
 
   sellPoint = { x, y: SCREEN_HEIGHT - y };
 
-  let result = (((sellPoint.y / buyPoint.y) - 1) * 100).toFixed(2);
+  lastResult = (((sellPoint.y / buyPoint.y) - 1) * 100).toFixed(2) + '%';
 
-
-  //fillStyle
-  //strokeStyle
-  ctx.font = '48px serif';
-  //ctx.fillText('Hello world', 10, 50);
-  ctx.strokeText('Hello world', 10, 50);
 
   console.log(sellPoint.y + ' | ' 
     + buyPoint.y + ' | '
