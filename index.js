@@ -26,13 +26,16 @@ DrawScore();
 
 
 function gameLoop() {
-  //for(let x=0; x<SCREEN_WIDTH; x++) {
-  //}
   y += Math.floor((Math.random() * 11) + 1) - 6;
+  
   putPixel(x, y);
+  
+  ctx.beginPath();
+  ctx.moveTo(xPrev, yPrev);
+  ctx.lineTo(x, y);
+  ctx.closePath();
+  ctx.stroke(); 
 
-  // if(buyPoint) {
-  // }
 
   x++;
   xPrev = x;
