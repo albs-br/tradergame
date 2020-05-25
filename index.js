@@ -7,16 +7,7 @@ const SCREEN_HEIGHT = 480;
 const canvas = document.getElementsByTagName('canvas')[0];
 const ctx = canvas.getContext("2d");
 
-
-ClearScreen();
-
 ctx.strokeStyle = "#FFFFFF";
-
-
-let putPixel = (x, y) => {
-  ctx.fillStyle = "#FFFFFF"; 
-  ctx.fillRect(x, y, 1, 1);
-};
 
 
 let x = 0;
@@ -30,8 +21,11 @@ let sellPoint = { };
 let cash = 1000;
 let lastResult;
 
+ClearScreen();
+DrawScore();
 
-window.setInterval(function () {
+
+function gameLoop() {
   //for(let x=0; x<SCREEN_WIDTH; x++) {
   //}
   y += Math.floor((Math.random() * 11) + 1) - 6;
@@ -60,24 +54,37 @@ window.setInterval(function () {
     btnSell.disabled = true;
 
   }
+}
 
-}, 1);
-
+function putPixel(x, y) {
+  ctx.fillStyle = "#FFFFFF"; 
+  ctx.fillRect(x, y, 1, 1);
+};
 
 
 function ClearScreen() {
   ctx.fillStyle = "#000000"; 
   ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-  //
+  DrawScore();
+}
+
+function DrawScore() {
+  ctx.fillStyle = "#000000"; 
+  ctx.fillRect(0, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/4);
+
   //fillStyle
   //strokeStyle
   ctx.font = '48px Verdana';
   //ctx.fillText('Hello world', 10, 50);
-  if(lastResult != undefined) {
-    ctx.strokeText(lastResult, 10, 50);
+
+  if(cash != undefined) {
+    ctx.strokeText('$' + cash.toFixed(2), 10, 50);
   }
 
+  if(lastResult != undefined) {
+    ctx.strokeText(lastResult, 10, 100);
+  }
 }
 
 let btnBuy = document.getElementById('buy');
@@ -103,11 +110,17 @@ let sell = () => {
   sellPoint = { x, y: SCREEN_HEIGHT - y };
 
   lastResult = (((sellPoint.y / buyPoint.y) - 1) * 100).toFixed(2) + '%';
+  if(lastResult > 0) {
+    lastResult = '+' + lastResult;
+  }
 
+  cash = cash * (sellPoint.y / buyPoint.y);
+
+  DrawScore();
 
   console.log(sellPoint.y + ' | ' 
     + buyPoint.y + ' | '
-    + result);
+    + lastResult);
 
   ctx.beginPath();
   ctx.moveTo(sellPoint.x, 0);
@@ -123,3 +136,5 @@ let sell = () => {
 
 btnSell.onclick = sell;
 
+
+window.setInterval(gameLoop, 1);
