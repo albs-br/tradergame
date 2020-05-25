@@ -10,8 +10,11 @@ const ctx = canvas.getContext("2d");
 
 ClearScreen();
 
+ctx.strokeStyle = "#FFFFFF";
+
 
 let putPixel = (x, y) => {
+  ctx.fillStyle = "#FFFFFF"; 
   ctx.fillRect(x, y, 1, 1);
 };
 
@@ -24,7 +27,6 @@ let yPrev= y;
 let buyPoint = { };
 let sellPoint = { };
 
-ctx.strokeStyle = "#FFFFFF";
 
 window.setInterval(function () {
   //for(let x=0; x<SCREEN_WIDTH; x++) {
@@ -63,7 +65,6 @@ window.setInterval(function () {
 function ClearScreen() {
   ctx.fillStyle = "#000000"; 
   ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-  ctx.fillStyle = "#FFFFFF"; 
 }
 
 let btnBuy = document.getElementById('buy');
@@ -89,6 +90,13 @@ let sell = () => {
   sellPoint = { x, y: SCREEN_HEIGHT - y };
 
   let result = (((sellPoint.y / buyPoint.y) - 1) * 100).toFixed(2);
+
+
+  //fillStyle
+  //strokeStyle
+  ctx.font = '48px serif';
+  //ctx.fillText('Hello world', 10, 50);
+  ctx.strokeText('Hello world', 10, 50);
 
   console.log(sellPoint.y + ' | ' 
     + buyPoint.y + ' | '
