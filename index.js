@@ -36,13 +36,13 @@ function gameLoop() {
 
   y += Math.floor((Math.random() * 11) + 1) - 6;
   
-  putPixel(x, y);
-  
-  ctx.beginPath();
-  ctx.moveTo(xPrev, yPrev);
-  ctx.lineTo(x, y);
-  ctx.closePath();
-  ctx.stroke(); 
+  //putPixel(x, y);
+  DrawLine(xPrev, yPrev, x, y);
+  // ctx.beginPath();
+  // ctx.moveTo(xPrev, yPrev);
+  // ctx.lineTo(x, y);
+  // ctx.closePath();
+  // ctx.stroke(); 
 
 
   x++;
@@ -85,6 +85,17 @@ function ClearScreen() {
   ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
   DrawScore();
+  DrawLine(0, 450, SCREEN_WIDTH-1, 450);
+  DrawLine(0, 450, 0, 460);
+  DrawLine(320, 450, 320, 460);
+}
+
+function DrawLine(x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.closePath();
+  ctx.stroke(); 
 }
 
 function DrawScore() {
@@ -113,7 +124,7 @@ function DrawScore() {
   }
 
   ctx.fillStyle = "#000000";
-  ctx.fillRect(0, 400, SCREEN_WIDTH/2, SCREEN_HEIGHT/4);
+  ctx.fillRect(0, 400, SCREEN_WIDTH/2, 440);
   
   ctx.font = '24px Verdana';
   ctx.strokeText("day: " + day, 10, 440);
