@@ -89,11 +89,8 @@ function ClearScreen() {
 
 function DrawScore() {
   ctx.fillStyle = "#000000"; 
-  
   ctx.fillRect(0, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/4);
 
-  //fillStyle
-  //strokeStyle
   ctx.font = '48px Verdana';
   //ctx.fillText('Hello world', 10, 50);
 
@@ -102,9 +99,20 @@ function DrawScore() {
   }
 
   if(lastResult != undefined) {
-    ctx.strokeText(lastResult, 10, 100);
+    let resultText = lastResult.toFixed(2) + '%'
+    
+    if(lastResult >= 0) {
+      ctx.fillStyle = "#00FF00";
+      resultText = '+' + resultText;
+    }
+    else {
+      ctx.fillStyle = "#FF0000";
+    }
+
+    ctx.fillText(resultText, 10, 100);
   }
 
+  ctx.fillStyle = "#000000";
   ctx.fillRect(0, 400, SCREEN_WIDTH/2, SCREEN_HEIGHT/4);
   
   ctx.font = '24px Verdana';
@@ -133,10 +141,7 @@ let sell = () => {
 
   sellPoint = { x, y: SCREEN_HEIGHT - y };
 
-  lastResult = (((sellPoint.y / buyPoint.y) - 1) * 100).toFixed(2) + '%';
-  if(lastResult > 0) {
-    lastResult = '+' + lastResult;
-  }
+  lastResult = (((sellPoint.y / buyPoint.y) - 1) * 100);
 
   cash = cash * (sellPoint.y / buyPoint.y);
 
