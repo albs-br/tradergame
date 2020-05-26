@@ -10,6 +10,8 @@ const ctx = canvas.getContext("2d");
 ctx.strokeStyle = "#FFFFFF";
 
 
+const TOTAL_DAYS = 10;
+
 let x = 0;
 let y = SCREEN_HEIGHT / 2;
 let xPrev = x;
@@ -18,14 +20,20 @@ let yPrev= y;
 let buyPoint = { };
 let sellPoint = { };
 
+let day = 1;
 let cash = 1000;
 let lastResult;
+
+let running = false;
 
 ClearScreen();
 DrawScore();
 
 
 function gameLoop() {
+  if(running) console.info('running');
+  running = true;
+
   y += Math.floor((Math.random() * 11) + 1) - 6;
   
   putPixel(x, y);
@@ -53,10 +61,17 @@ function gameLoop() {
     sellPoint = { };
     ClearScreen();
 
+    if(day == TOTAL_DAYS) {
+      window.clearInterval(gameLoopInterval);
+    }
+
+    day++;
+
     btnBuy.disabled = false;
     btnSell.disabled = true;
-
   }
+
+  running = false;
 }
 
 function putPixel(x, y) {
@@ -74,6 +89,7 @@ function ClearScreen() {
 
 function DrawScore() {
   ctx.fillStyle = "#000000"; 
+  
   ctx.fillRect(0, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/4);
 
   //fillStyle
@@ -88,6 +104,11 @@ function DrawScore() {
   if(lastResult != undefined) {
     ctx.strokeText(lastResult, 10, 100);
   }
+
+  ctx.fillRect(0, 400, SCREEN_WIDTH/2, SCREEN_HEIGHT/4);
+  
+  ctx.font = '24px Verdana';
+  ctx.strokeText("day: " + day, 10, 440);
 }
 
 let btnBuy = document.getElementById('buy');
@@ -140,4 +161,4 @@ let sell = () => {
 btnSell.onclick = sell;
 
 
-window.setInterval(gameLoop, 1);
+let gameLoopInterval = window.setInterval(gameLoop, 1);
