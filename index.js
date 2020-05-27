@@ -29,12 +29,21 @@ let running = false;
 ClearScreen();
 //DrawScore();
 
+function randomNumber(min, max) {
+  // console.info((max-min)+1);
+  let rnd = Math.floor((Math.random() * (max-min+1)) + min); // random number between min and max
+  // let rnd = Math.floor((Math.random() * 11) - 5); // random number between -5 and +5
+  // if(rnd >= max) console.debug(rnd);
+  // if(rnd <= min) console.debug(rnd);
+  // console.info(rnd);
+  return rnd;
+}
 
 function gameLoop() {
   if(running) console.info('running');
   running = true;
 
-  y += Math.floor((Math.random() * 11) + 1) - 6; // random number between -5 and +5
+  y += randomNumber(-5, 5);
   if(y <= 0) y = 0;
   if(y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT;
   
