@@ -27,14 +27,16 @@ let lastResult;
 let running = false;
 
 ClearScreen();
-DrawScore();
+//DrawScore();
 
 
 function gameLoop() {
   if(running) console.info('running');
   running = true;
 
-  y += Math.floor((Math.random() * 11) + 1) - 6;
+  y += Math.floor((Math.random() * 11) + 1) - 6; // random number between -5 and +5
+  if(y <= 0) y = 0;
+  if(y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT;
   
   //putPixel(x, y);
   DrawLine(xPrev, yPrev, x, y);
@@ -44,12 +46,23 @@ function gameLoop() {
   // ctx.closePath();
   // ctx.stroke(); 
 
+  // // Create gradient
+  // var grd = ctx.createLinearGradient(0, 0, 0, SCREEN_HEIGHT);
+  // grd.addColorStop(0, "#0000FF");
+  // grd.addColorStop(1, "#000000");
 
-  x++;
+  // // Fill with gradient
+  // ctx.fillStyle = grd;
+  // ctx.fillRect(xPrev, yPrev+1, x, SCREEN_HEIGHT); 
+
+  // ctx.fillStyle = "#000000";
+
   xPrev = x;
   yPrev = y;
+  x++;
 
   if(x >= SCREEN_WIDTH) { 
+    console.info('day: ' + day);
 
     sell();
 
@@ -59,16 +72,18 @@ function gameLoop() {
     yPrev = y;
     buyPoint = { };
     sellPoint = { };
-    ClearScreen();
+    day++;
 
-    if(day == TOTAL_DAYS) {
+    if(day > TOTAL_DAYS) {
       window.clearInterval(gameLoopInterval);
     }
-
-    day++;
+    else {
+      ClearScreen();
+    }
 
     btnBuy.disabled = false;
     btnSell.disabled = true;
+
   }
 
   running = false;
@@ -103,21 +118,26 @@ function DrawScore() {
   ctx.fillRect(0, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/4);
 
   ctx.font = '48px Verdana';
-  //ctx.fillText('Hello world', 10, 50);
 
   if(cash != undefined) {
-    ctx.strokeText('$' + cash.toFixed(2), 10, 50);
+    ctx.fillStyle = "white";
+    ctx.fillText('$' + cash.toFixed(2), 10, 50);
+    //ctx.strokeText('$' + cash.toFixed(2), 10, 50);
   }
 
   if(lastResult != undefined) {
     let resultText = lastResult.toFixed(2) + '%'
     
+    if(lastResult == 0) {
+      ctx.fillStyle = "royalblue";
+      resultText = '+' + resultText;
+    }
     if(lastResult >= 0) {
-      ctx.fillStyle = "#00FF00";
+      ctx.fillStyle = "lime";
       resultText = '+' + resultText;
     }
     else {
-      ctx.fillStyle = "#FF0000";
+      ctx.fillStyle = "red";
     }
 
     ctx.fillText(resultText, 10, 100);
@@ -126,8 +146,9 @@ function DrawScore() {
   ctx.fillStyle = "#000000";
   ctx.fillRect(0, 400, SCREEN_WIDTH/2, 440);
   
+  ctx.fillStyle = "#FFFFFF";
   ctx.font = '24px Verdana';
-  ctx.strokeText("day: " + day, 10, 440);
+  ctx.fillText("day: " + day, 10, 440);
 }
 
 let btnBuy = document.getElementById('buy');
