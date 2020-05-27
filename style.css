@@ -1,10 +1,17 @@
-h1, h2 {
+* {
   font-family: Lato;
 }
 
+canvas {
+  width: 98%;
+  margin-left: 1%;
+}
+
 button {
-  width: 45%;
+  width: 48.5%;
   height: 100px;
+  margin-left: 1%;
+  margin-right: 0;
 }
 
 #buy {
