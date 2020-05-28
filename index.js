@@ -26,7 +26,7 @@ let lastResult;
 
 let running = false;
 
-ClearScreen();
+clearScreen();
 //DrawScore();
 
 function randomNumber(min, max) {
@@ -48,7 +48,7 @@ function gameLoop() {
   if(y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT;
   
   //putPixel(x, y);
-  DrawLine(xPrev, yPrev, x, y);
+  drawLine(xPrev, yPrev, x, y);
   // ctx.beginPath();
   // ctx.moveTo(xPrev, yPrev);
   // ctx.lineTo(x, y);
@@ -87,7 +87,7 @@ function gameLoop() {
       window.clearInterval(gameLoopInterval);
     }
     else {
-      ClearScreen();
+      clearScreen();
     }
 
     btnBuy.disabled = false;
@@ -104,17 +104,17 @@ function putPixel(x, y) {
 };
 
 
-function ClearScreen() {
+function clearScreen() {
   ctx.fillStyle = "#000000"; 
   ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
   DrawScore();
-  DrawLine(0, 450, SCREEN_WIDTH-1, 450);
-  DrawLine(0, 450, 0, 460);
-  DrawLine(320, 450, 320, 460);
+  drawLine(0, 450, SCREEN_WIDTH-1, 450);
+  drawLine(0, 450, 0, 460);
+  drawLine(320, 450, 320, 460);
 }
 
-function DrawLine(x1, y1, x2, y2) {
+function drawLine(x1, y1, x2, y2) {
   ctx.beginPath();
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
@@ -141,7 +141,7 @@ function DrawScore() {
       ctx.fillStyle = "royalblue";
       resultText = '+' + resultText;
     }
-    if(lastResult >= 0) {
+    else if(lastResult >= 0) {
       ctx.fillStyle = "lime";
       resultText = '+' + resultText;
     }
