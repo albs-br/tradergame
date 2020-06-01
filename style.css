@@ -21,3 +21,21 @@ button {
 #sell {
     background-color: red;
 }
+
+.container {
+  /* background-color: red; */
+  width: 100%;
+  padding-top: 100%; /* 4:3 Aspect Ratio (divide 3 by 4 = 0.75) */
+  position: relative; /* If you want text inside of it */
+}
+
+.inside {
+  position:  absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /* text-align: center;
+  font-size: 20px;
+  color: white; */
+}

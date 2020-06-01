@@ -1,9 +1,8 @@
-import './style.css';
+// import './style.css';
 // import 'https://www.w3schools.com/w3css/4/w3.css';
 // import { * } from './constants.js';
 const SCREEN_WIDTH = 640;
 const SCREEN_HEIGHT = 480;
-
 
 const canvas = document.getElementsByTagName('canvas')[0];
 const ctx = canvas.getContext("2d");
@@ -56,16 +55,16 @@ function gameLoop() {
   // ctx.closePath();
   // ctx.stroke(); 
 
-  // // Create gradient
-  // var grd = ctx.createLinearGradient(0, 0, 0, SCREEN_HEIGHT);
-  // grd.addColorStop(0, "#0000FF");
-  // grd.addColorStop(1, "#000000");
+  // Create gradient
+  var grd = ctx.createLinearGradient(0, 0, 0, SCREEN_HEIGHT);
+  grd.addColorStop(0, "rgb(9,113,142)");
+  grd.addColorStop(1, "rgb(0,5,38)");
 
-  // // Fill with gradient
-  // ctx.fillStyle = grd;
-  // ctx.fillRect(xPrev, yPrev+1, x, SCREEN_HEIGHT); 
+  // Fill with gradient
+  ctx.fillStyle = grd;
+  ctx.fillRect(xPrev, yPrev+1, 1, SCREEN_HEIGHT-y-100); 
 
-  // ctx.fillStyle = "#000000";
+  ctx.fillStyle = "#000000";
 
   xPrev = x;
   yPrev = y;
