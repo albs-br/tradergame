@@ -228,3 +228,13 @@ btnSell.onclick = sell;
 
 
 let gameLoopInterval = window.setInterval(gameLoop, 1);
+
+window.onload = window.onresize = function () {
+  let inside = this.document.getElementsByClassName('inside')[0];
+  
+  // Get the smaller between width and height of the screen
+  let smaller = (window.innerWidth < window.innerHeight) ? window.innerWidth : window.innerHeight;
+  
+  inside.style.width = smaller;
+  inside.style.height = smaller;
+}
