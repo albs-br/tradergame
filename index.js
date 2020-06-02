@@ -7,6 +7,9 @@ const SCREEN_HEIGHT = 480;
 const canvas = document.getElementsByTagName('canvas')[0];
 const ctx = canvas.getContext("2d");
 
+// ctx.imageSmoothingEnabled = false;
+// ctx.translate(0.5, 0.5);
+
 ctx.strokeStyle = "#FFFFFF";
 
 
@@ -48,7 +51,7 @@ function gameLoop() {
   if(y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT;
   
   //putPixel(x, y);
-  drawLine(xPrev, yPrev, x, y);
+  drawLine(xPrev, yPrev, x, y, 2);
   // ctx.beginPath();
   // ctx.moveTo(xPrev, yPrev);
   // ctx.lineTo(x, y);
@@ -65,6 +68,11 @@ function gameLoop() {
   ctx.fillRect(xPrev, yPrev+1, 1, SCREEN_HEIGHT-y-100); 
 
   ctx.fillStyle = "#000000";
+
+  if(buyPoint.x != undefined) { 
+    drawLine(buyPoint.x, 0, buyPoint.x, SCREEN_HEIGHT - 1, 1, '#808080');0010
+    //window.clearInterval(gameLoopInterval
+  };
 
   xPrev = x;
   yPrev = y;
@@ -108,13 +116,18 @@ function clearScreen() {
   ctx.fillStyle = "#000000"; 
   ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-  DrawScore();
+  drawScore();
+  
+  // ruler with hours on the bottom of screen
   drawLine(0, 450, SCREEN_WIDTH-1, 450);
   drawLine(0, 450, 0, 460);
   drawLine(320, 450, 320, 460);
 }
 
-function drawLine(x1, y1, x2, y2) {
+function drawLine(x1, y1, x2, y2, lineWidth = 1, strokeStyle = "#FFFFFF") {
+  ctx.lineWidth = lineWidth;
+  ctx.strokeStyle = strokeStyle;
+
   ctx.beginPath();
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
@@ -122,7 +135,7 @@ function drawLine(x1, y1, x2, y2) {
   ctx.stroke(); 
 }
 
-function DrawScore() {
+function drawScore() {
   ctx.fillStyle = "#000000"; 
   ctx.fillRect(0, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/4);
 
@@ -139,7 +152,7 @@ function DrawScore() {
     
     if(lastResult == 0) {
       ctx.fillStyle = "royalblue";
-      resultText = '+' + resultText;
+      resultText = resultText;
     }
     else if(lastResult >= 0) {
       ctx.fillStyle = "lime";
@@ -166,11 +179,12 @@ let btnSell = document.getElementById('sell');
 btnBuy.onclick = function() {
   buyPoint = { x, y: SCREEN_HEIGHT - y };
 
-  ctx.beginPath();
-  ctx.moveTo(buyPoint.x, 0);
-  ctx.lineTo(buyPoint.x, SCREEN_HEIGHT - 1);
-  ctx.closePath();
-  ctx.stroke(); 
+  drawLine(buyPoint.x, 0, buyPoint.x, SCREEN_HEIGHT - 1);
+  // ctx.beginPath();
+  // ctx.moveTo(buyPoint.x, 0);
+  // ctx.lineTo(buyPoint.x, SCREEN_HEIGHT - 1);
+  // ctx.closePath();
+  // ctx.stroke(); 
 
   btnBuy.disabled = true;
   btnSell.disabled = false;
@@ -186,17 +200,18 @@ let sell = () => {
 
   cash = cash * (sellPoint.y / buyPoint.y);
 
-  DrawScore();
+  drawScore();
 
   console.log(sellPoint.y + ' | ' 
     + buyPoint.y + ' | '
     + lastResult);
 
-  ctx.beginPath();
-  ctx.moveTo(sellPoint.x, 0);
-  ctx.lineTo(sellPoint.x, SCREEN_HEIGHT - 1);
-  ctx.stroke();
-  ctx.closePath();
+  drawLine(sellPoint.x, 0, sellPoint.x, SCREEN_HEIGHT - 1);
+  // ctx.beginPath();
+  // ctx.moveTo(sellPoint.x, 0);
+  // ctx.lineTo(sellPoint.x, SCREEN_HEIGHT - 1);
+  // ctx.stroke();
+  // ctx.closePath();
 
   buyPoint = { };
   
