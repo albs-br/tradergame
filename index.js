@@ -3,6 +3,7 @@
 // import { * } from './constants.js';
 const SCREEN_WIDTH = 640;
 const SCREEN_HEIGHT = 480;
+const RULER_HEIGHT = 30;
 
 const canvas = document.getElementsByTagName('canvas')[0];
 const ctx = canvas.getContext("2d");
@@ -12,6 +13,9 @@ const ctx = canvas.getContext("2d");
 
 ctx.strokeStyle = "#FFFFFF";
 
+let grd = ctx.createLinearGradient(0, 0, 0, SCREEN_HEIGHT-RULER_HEIGHT);
+grd.addColorStop(0, "rgb(9,113,142)");
+grd.addColorStop(1, "rgb(0,5,38)");
 
 const TOTAL_DAYS = 10;
 
@@ -46,34 +50,32 @@ function gameLoop() {
   if(running) console.info('running');
   running = true;
 
+  // Update vars
   y += randomNumber(-5, 5);
   if(y <= 0) y = 0;
-  if(y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT;
+  if(y >= SCREEN_HEIGHT-RULER_HEIGHT) y = SCREEN_HEIGHT-RULER_HEIGHT;
   
+
+  // Draw objects
   //putPixel(x, y);
   drawLine(xPrev, yPrev, x, y, 2);
-  // ctx.beginPath();
-  // ctx.moveTo(xPrev, yPrev);
-  // ctx.lineTo(x, y);
-  // ctx.closePath();
-  // ctx.stroke(); 
 
-  // Create gradient
-  var grd = ctx.createLinearGradient(0, 0, 0, SCREEN_HEIGHT);
-  grd.addColorStop(0, "rgb(9,113,142)");
-  grd.addColorStop(1, "rgb(0,5,38)");
-
-  // Fill with gradient
   ctx.fillStyle = grd;
-  ctx.fillRect(xPrev, yPrev+1, 1, SCREEN_HEIGHT-y-100); 
+  ctx.fillRect(x, y+1, 1, SCREEN_HEIGHT-y-RULER_HEIGHT-2); 
 
   ctx.fillStyle = "#000000";
 
   if(buyPoint.x != undefined) { 
-    drawLine(buyPoint.x, 0, buyPoint.x, SCREEN_HEIGHT - 1, 1, '#808080');0010
-    //window.clearInterval(gameLoopInterval
+    drawLine(buyPoint.x, 0, buyPoint.x, SCREEN_HEIGHT - 1, 1, '#808080');
   };
 
+  if(sellPoint.x != undefined) { 
+    drawLine(sellPoint.x, 0, sellPoint.x, SCREEN_HEIGHT - 1, 1, '#808080');
+  };
+
+  drawScore();
+
+  // Set vars to next iteration
   xPrev = x;
   yPrev = y;
   x++;
@@ -117,11 +119,24 @@ function clearScreen() {
   ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
   drawScore();
-  
+  drawRuler();  
+}
+
+function drawRuler() {
   // ruler with hours on the bottom of screen
   drawLine(0, 450, SCREEN_WIDTH-1, 450);
-  drawLine(0, 450, 0, 460);
-  drawLine(320, 450, 320, 460);
+  let hour = 10;
+  for(let i=0; i<=SCREEN_WIDTH; i+=SCREEN_WIDTH/7) {
+    drawLine(i, 450, i, 460);
+    
+    ctx.font = '12px Verdana';
+    ctx.fillStyle = "#808080";
+    ctx.fillText(hour + ':00', i, 470);
+    
+    hour++;
+  }
+  // drawLine(0, 450, 0, 460);
+  // drawLine(320, 450, 320, 460);
 }
 
 function drawLine(x1, y1, x2, y2, lineWidth = 1, strokeStyle = "#FFFFFF") {
@@ -137,7 +152,7 @@ function drawLine(x1, y1, x2, y2, lineWidth = 1, strokeStyle = "#FFFFFF") {
 
 function drawScore() {
   ctx.fillStyle = "#000000"; 
-  ctx.fillRect(0, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/4);
+  ctx.fillRect(0, 0, 250, 110);
 
   ctx.font = '48px Verdana';
 
@@ -165,8 +180,8 @@ function drawScore() {
     ctx.fillText(resultText, 10, 100);
   }
 
-  ctx.fillStyle = "#000000";
-  ctx.fillRect(0, 400, SCREEN_WIDTH/2, 440);
+  // ctx.fillStyle = "#000000";
+  // ctx.fillRect(0, 440, 120, 50);
   
   ctx.fillStyle = "#FFFFFF";
   ctx.font = '24px Verdana';
@@ -179,12 +194,7 @@ let btnSell = document.getElementById('sell');
 btnBuy.onclick = function() {
   buyPoint = { x, y: SCREEN_HEIGHT - y };
 
-  drawLine(buyPoint.x, 0, buyPoint.x, SCREEN_HEIGHT - 1);
-  // ctx.beginPath();
-  // ctx.moveTo(buyPoint.x, 0);
-  // ctx.lineTo(buyPoint.x, SCREEN_HEIGHT - 1);
-  // ctx.closePath();
-  // ctx.stroke(); 
+  //drawLine(buyPoint.x, 0, buyPoint.x, SCREEN_HEIGHT - 1);
 
   btnBuy.disabled = true;
   btnSell.disabled = false;
@@ -206,12 +216,7 @@ let sell = () => {
     + buyPoint.y + ' | '
     + lastResult);
 
-  drawLine(sellPoint.x, 0, sellPoint.x, SCREEN_HEIGHT - 1);
-  // ctx.beginPath();
-  // ctx.moveTo(sellPoint.x, 0);
-  // ctx.lineTo(sellPoint.x, SCREEN_HEIGHT - 1);
-  // ctx.stroke();
-  // ctx.closePath();
+  // drawLine(sellPoint.x, 0, sellPoint.x, SCREEN_HEIGHT - 1);
 
   buyPoint = { };
   
