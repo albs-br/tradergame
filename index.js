@@ -229,7 +229,7 @@ btnSell.onclick = sell;
 
 let gameLoopInterval = window.setInterval(gameLoop, 1);
 
-window.onload = window.onresize = function () {
+function resizeWindow() {
   let inside = this.document.getElementsByClassName('inside')[0];
   
   // Get the smaller between width and height of the screen
@@ -237,4 +237,28 @@ window.onload = window.onresize = function () {
   
   inside.style.width = smaller;
   inside.style.height = smaller;
+}
+
+window.onresize = resizeWindow;
+
+window.onload = () => {
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+             .register('./service-worker.js')
+             .then(function(registration) { 
+
+      console.log('Service Worker Registered'); 
+      
+      $('#version').click(() => {
+        // Force reload of all files
+        console.info('Unregistering service worker and reloading page')
+        registration.unregister().then(function() { 
+          window.location.reload(true); 
+        });
+      });
+    });
+  }
+
+  resizeWindow();
 }
