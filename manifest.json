@@ -2,12 +2,12 @@
   "name": "Trader Game",
   "short_name": "Trader Game",
   "icons": [{
-      "src": "/images/icons-192.png",
+      "src": "/images/up-arrow-256x256.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "256x256"
     },
     {
-      "src": "/images/icons-512.png",
+      "src": "/images/up-arrow-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }],
