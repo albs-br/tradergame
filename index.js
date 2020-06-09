@@ -248,7 +248,8 @@ window.onload = () => {
              .register('./service-worker.js')
              .then(function(registration) { 
 
-      console.log('Service Worker Registered'); 
+      //console.log('Service Worker Registered'); 
+      console.log('Registration successful, scope is:', registration.scope);
       
       $('#version').click(() => {
         // Force reload of all files
