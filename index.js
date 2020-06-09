@@ -244,20 +244,26 @@ window.onresize = resizeWindow;
 window.onload = () => {
   // Register service worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-             .register('./service-worker.js')
+
+    // navigator.serviceWorker.register('/app/service-worker.js', {
+    //   scope: '/app'
+    // });
+
+    navigator.serviceWorker.register('./service-worker.js', {
+                scope: '/tradergame'
+              })
              .then(function(registration) { 
 
       //console.log('Service Worker Registered'); 
       console.log('Registration successful, scope is:', registration.scope);
       
-      $('#version').click(() => {
-        // Force reload of all files
-        console.info('Unregistering service worker and reloading page')
-        registration.unregister().then(function() { 
-          window.location.reload(true); 
-        });
-      });
+      // $('#version').click(() => {
+      //   // Force reload of all files
+      //   console.info('Unregistering service worker and reloading page')
+      //   registration.unregister().then(function() { 
+      //     window.location.reload(true); 
+      //   });
+      // });
     });
   }
 
