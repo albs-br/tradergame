@@ -2,11 +2,11 @@ var dataCacheName = 'tradergame';
 var cacheName = 'tradergame';
 var filesToCache = [
   //'/',
-  './index.html',
-  './manifest.json',
-  './index.js',
-  './style.css',
-  './service-worker.js',
+  './tradergame/index.html',
+  './tradergame/manifest.json',
+  './tradergame/index.js',
+  './tradergame/style.css',
+  './tradergame/service-worker.js',
   //'./scripts',
   // './scripts/vendor/pace.min.js',
   // './styles/vendor/pace-theme-minimal.css',

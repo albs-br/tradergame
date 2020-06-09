@@ -249,10 +249,9 @@ window.onload = () => {
     //   scope: '/app'
     // });
 
-    navigator.serviceWorker.register('./service-worker.js', {
-                scope: '/tradergame'
-              })
-             .then(function(registration) { 
+    navigator.serviceWorker
+              .register('./service-worker.js')
+              .then(function(registration) {
 
       //console.log('Service Worker Registered'); 
       console.log('Registration successful, scope is:', registration.scope);
