@@ -1,6 +1,9 @@
 * {
-  font-family: Lato;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: large;
 }
+
+html { overflow-x: hidden; }
 
 canvas {
   width: 98%;
@@ -12,15 +15,16 @@ button {
   height: 100px;
   margin-left: 1%;
   margin-right: 0;
+  margin-top: 10px;
 }
 
-#buy {
+/* #buy {
     background-color: green;
 }
 
 #sell {
     background-color: red;
-}
+} */
 
 .container {
   text-align: center;
